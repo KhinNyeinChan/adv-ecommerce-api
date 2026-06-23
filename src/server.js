@@ -6,6 +6,7 @@ import { connectRedis } from "./config/redis.js";
 // Import routes
 import authRoutes from "./routes/authRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
+import orderRoutes from "./routes/orderRoutes.js";
 
 connectDB();
 connectRedis();
@@ -21,6 +22,7 @@ app.use(cookieParser()); // Cookie parser middleware to handle cookies
 // API routes
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
+app.use("/api/orders", orderRoutes);
 
 const server = app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server is running on port ${PORT}`);
