@@ -1,6 +1,10 @@
 import express from "express";
+import cookieParser from "cookie-parser";
 import { config } from "dotenv";
 import { connectDB, disconnectDB } from "./config/db.js";
+
+// Import routes
+import authRoutes from "./routes/authRoutes.js";
 
 config();
 connectDB();
@@ -11,6 +15,10 @@ const PORT = process.env.PORT || 5001;
 // Middleware to parse JSON bodies
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser()); // Cookie parser middleware to handle cookies
+
+// API routes
+app.use("/api/auth", authRoutes);
 
 const server = app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server is running on port ${PORT}`);
