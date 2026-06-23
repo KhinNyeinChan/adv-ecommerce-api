@@ -1,13 +1,14 @@
 import express from "express";
 import cookieParser from "cookie-parser";
-import { config } from "dotenv";
 import { connectDB, disconnectDB } from "./config/db.js";
+import { connectRedis } from "./config/redis.js";
 
 // Import routes
 import authRoutes from "./routes/authRoutes.js";
+import productRoutes from "./routes/productRoutes.js";
 
-config();
 connectDB();
+connectRedis();
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -19,6 +20,7 @@ app.use(cookieParser()); // Cookie parser middleware to handle cookies
 
 // API routes
 app.use("/api/auth", authRoutes);
+app.use("/api/products", productRoutes);
 
 const server = app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server is running on port ${PORT}`);
