@@ -1,0 +1,70 @@
+{
+  "/api/orders": {
+    "post": {
+      "summary": "Create a new order & deduct stock safely",
+      "tags": ["Orders"],
+      "security": [
+        {
+          "cookieAuth": []
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": ["orderItems", "shippingAddress", "totalPrice"],
+              "properties": {
+                "orderItems": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": ["name", "qty", "image", "price", "product"],
+                    "properties": {
+                      "name": { "type": "string" },
+                      "qty": { "type": "integer" },
+                      "image": { "type": "string" },
+                      "price": { "type": "number" },
+                      "product": { "type": "string", "description": "Product ID" }
+                    }
+                  }
+                },
+                "shippingAddress": {
+                  "type": "object",
+                  "required": ["address", "city", "postalCode"],
+                  "properties": {
+                    "address": { "type": "string" },
+                    "city": { "type": "string" },
+                    "postalCode": { "type": "string" }
+                  }
+                },
+                "totalPrice": { "type": "number" }
+              }
+            }
+          }
+        }
+      },
+      "responses": {
+        "201": { "description": "Order created successfully" },
+        "400": { "description": "Out of stock / Invalid order items" },
+        "401": { "description": "Not authorized, token failed" }
+      }
+    }
+  },
+  "/api/orders/myorders": {
+    "get": {
+      "summary": "Get order history of the logged-in user",
+      "tags": ["Orders"],
+      "security": [
+        {
+          "cookieAuth": []
+        }
+      ],
+      "responses": {
+        "200": { "description": "List of user orders retrieved successfully" },
+        "401": { "description": "Not authorized" }
+      }
+    }
+  }
+}

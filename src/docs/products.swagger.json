@@ -1,0 +1,128 @@
+{
+  "/api/products": {
+    "get": {
+      "summary": "Get all products (Served with Redis Caching)",
+      "tags": ["Products"],
+      "responses": {
+        "200": {
+          "description": "List of all products successfully retrieved"
+        }
+      }
+    },
+    "post": {
+      "summary": "Create a new product (Admin Only)",
+      "tags": ["Products"],
+      "security": [
+        {
+          "cookieAuth": []
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": ["name", "price", "image", "category", "stock"],
+              "properties": {
+                "name": { "type": "string" },
+                "price": { "type": "number" },
+                "image": { "type": "string", "description": "Image URL string" },
+                "category": { "type": "string" },
+                "stock": { "type": "integer" },
+                "description": { "type": "string" }
+              }
+            }
+          }
+        }
+      },
+      "responses": {
+        "201": { "description": "Product created successfully & Redis cache invalidated" },
+        "401": { "description": "Not authorized / Not an Admin" }
+      }
+    }
+  },
+  "/api/products/{id}": {
+    "get": {
+      "summary": "Get single product details by ID",
+      "tags": ["Products"],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "The Product MongoDB ID",
+          "schema": { "type": "string" }
+        }
+      ],
+      "responses": {
+        "200": { "description": "Product details successfully retrieved" },
+        "404": { "description": "Product not found" }
+      }
+    },
+    "put": {
+      "summary": "Update product details (Admin Only)",
+      "tags": ["Products"],
+      "security": [
+        {
+          "cookieAuth": []
+        }
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "The Product MongoDB ID",
+          "schema": { "type": "string" }
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string" },
+                "price": { "type": "number" },
+                "image": { "type": "string" },
+                "category": { "type": "string" },
+                "stock": { "type": "integer" },
+                "description": { "type": "string" }
+              }
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": { "description": "Product updated successfully & Redis cache invalidated" },
+        "401": { "description": "Not authorized" },
+        "404": { "description": "Product not found" }
+      }
+    },
+    "delete": {
+      "summary": "Delete a product from store (Admin Only)",
+      "tags": ["Products"],
+      "security": [
+        {
+          "cookieAuth": []
+        }
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "The Product MongoDB ID",
+          "schema": { "type": "string" }
+        }
+      ],
+      "responses": {
+        "200": { "description": "Product removed successfully & Redis cache invalidated" },
+        "401": { "description": "Not authorized" },
+        "404": { "description": "Product not found" }
+      }
+    }
+  }
+}

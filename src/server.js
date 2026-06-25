@@ -3,6 +3,7 @@ import cookieParser from "cookie-parser";
 import { connectDB, disconnectDB } from "./config/db.js";
 import { connectRedis } from "./config/redis.js";
 import { initSalesReportJob } from "./jobs/salesReportJob.js";
+import { setupSwagger } from "./docs/swagger.js";
 
 // Import routes
 import authRoutes from "./routes/authRoutes.js";
@@ -22,6 +23,9 @@ const PORT = process.env.PORT || 5001;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser()); // Cookie parser middleware to handle cookies
+
+// Enable Swagger Docs before API Routes
+setupSwagger(app);
 
 // API routes
 app.use("/api/auth", authRoutes);
