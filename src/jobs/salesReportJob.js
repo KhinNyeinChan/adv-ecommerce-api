@@ -13,7 +13,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export const initSalesReportJob = () => {
     // Cron Expression to run every night at exactly 12:00 AM: '0 0 * * *'
     // If you want to send every 1 minute during the trial period, you can change it to '* * * * *'
-    cron.schedule("* * * * *", async () => {
+    cron.schedule("0 0 * * *", async () => {
         console.log("Running Daily Sales Report Cron Job...");
 
         try {
