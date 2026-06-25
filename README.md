@@ -27,7 +27,8 @@ A production-ready, high-performance E-Commerce Backend RESTful API built with *
 ---
 
 ## ⚙️ Environment Variables
-Change .env.example to .env 
+Change .env.example to .env
+
 Add your real data in .env file
 
 ---
@@ -38,10 +39,10 @@ npm install
 ---
 
 ## Run the application 
-# Development Mode (with Nodemon)
+### Development Mode (with Nodemon)
 npm run dev
 
-# Production Mode
+### Production Mode
 npm start
 
 
