@@ -61,7 +61,7 @@ This project includes a fully interactive API documentation built with **Swagger
 ### How to Access Docs
 1. Run the server locally using `npm run dev`.
 2. Open your browser and navigate to:
-   [http://localhost:3001/api-docs](http://localhost:3001/api-docs)
+   [http://localhost:yourPortNo/api-docs](http://localhost:yourPortNo/api-docs)
 
 ### Features Documented:
 * **Authentication Module:** Complete flows for User Registration, Login, and Logout (HTTP-Only Cookie details).
