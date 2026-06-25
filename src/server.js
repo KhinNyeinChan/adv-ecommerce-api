@@ -2,6 +2,7 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import { connectDB, disconnectDB } from "./config/db.js";
 import { connectRedis } from "./config/redis.js";
+import { initSalesReportJob } from "./jobs/salesReportJob.js";
 
 // Import routes
 import authRoutes from "./routes/authRoutes.js";
@@ -10,6 +11,9 @@ import orderRoutes from "./routes/orderRoutes.js";
 
 connectDB();
 connectRedis();
+
+//Cron Job
+initSalesReportJob();
 
 const app = express();
 const PORT = process.env.PORT || 5001;
